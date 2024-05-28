@@ -4,11 +4,11 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Syste
 
 #il faudra mettre le code pour cacher la suite ICI
 
-# Importer l'assemblée pour Windows Forms
+# Importer l'assemblÃ©e pour Windows Forms
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
-# Créer la fenêtre principale
+# CrÃ©er la fenÃªtre principale
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "Kidou_Software V1.6 DEV"
 $form.Size = New-Object System.Drawing.Size(390, 415)
@@ -78,8 +78,8 @@ if ($confirm -eq "Yes") {
         bcdedit /set {current} safeboot network
         $desktopPath = [System.Environment]::GetFolderPath('Desktop')
         $scriptPath = "$desktopPath\WindowsNormal.cmd"
-        Set-Content -Path $scriptPath -Value "@echo off`nbcdedit /deletevalue {current} safeboot`nshutdown /r /t 5 /c `"Desactivation du mode sans échec en cours...`"`ndel WindowsNormal.cmd`nexit"
-        shutdown /r /t 5 /c "Activation du mode sans échec en cours..."}}
+        Set-Content -Path $scriptPath -Value "@echo off`nbcdedit /deletevalue {current} safeboot`nshutdown /r /t 5 /c `"Desactivation du mode sans Ã©chec en cours...`"`ndel WindowsNormal.cmd`nexit"
+        shutdown /r /t 5 /c "Activation du mode sans Ã©chec en cours..."}}
         Stop-Process -Id $PID
     },
     {
@@ -92,7 +92,7 @@ function Remove-Edge {
 
     $edgeAppPath = "C:\Program Files (x86)\Microsoft\Edge\Application"
 
-    # Trouver la version la plus récente d'Edge
+    # Trouver la version la plus rÃ©cente d'Edge
     Get-ChildItem -Path $edgeAppPath -Directory | ForEach-Object {
         if ($_.Name -match "^\d+(\.\d+)*$") {
             if ($_.Name -gt $maxVersion) {
@@ -113,14 +113,14 @@ function Remove-Edge {
 
 # Fonction pour supprimer OneDrive
 function Remove-OneDrive {
-    # Afficher une fenêtre de confirmation
+    # Afficher une fenÃªtre de confirmation
     $confirmDialog = [System.Windows.Forms.MessageBox]::Show("Ce script va supprimer completement et definitivement OneDrive de votre ordinateur. Assurez-vous que tous les documents OneDrive stockes localement sont sauvegardes entierement avant de proceder.`n`nVoulez-vous continuer ?", "Avertissement", [System.Windows.Forms.MessageBoxButtons]::YesNo, [System.Windows.Forms.MessageBoxIcon]::Warning)
 
     if ($confirmDialog -eq "Yes") {
         # Terminer le processus OneDrive
         Stop-Process -Name "OneDrive" -Force
 
-        # Supprimer les répertoires et les fichiers de OneDrive
+        # Supprimer les rÃ©pertoires et les fichiers de OneDrive
         $oneDriveFolders = @(
             "$env:USERPROFILE\OneDrive",
             "$env:LOCALAPPDATA\Microsoft\OneDrive",
@@ -134,20 +134,20 @@ function Remove-OneDrive {
             }
         }
 
-        # Supprimer le raccourci du menu Démarrer
+        # Supprimer le raccourci du menu DÃ©marrer
         $startMenuShortcut = "$env:USERPROFILE\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk"
         if (Test-Path $startMenuShortcut) {
             Remove-Item -Path $startMenuShortcut -Force
         }
 
-        # Supprimer les entrées de registre associées à OneDrive
+        # Supprimer les entrÃ©es de registre associÃ©es Ã  OneDrive
         Remove-Item -Path "Registry::HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" -Recurse -Force
         Remove-Item -Path "Registry::HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" -Recurse -Force
         New-ItemProperty -Path "Registry::HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" -Name "System.IsPinnedToNameSpaceTree" -Value 0 -PropertyType DWORD -Force
     }
 }
 
-# Créer une fenêtre principale
+# CrÃ©er une fenÃªtre principale
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "Suppression d'Applications"
 $form.Size = New-Object System.Drawing.Size(400, 200)
@@ -155,7 +155,7 @@ $form.StartPosition = "CenterScreen"
 
 # Ajouter un Label pour le titre
 $titleLabel = New-Object System.Windows.Forms.Label
-$titleLabel.Text = "Choisissez une application à supprimer :"
+$titleLabel.Text = "Choisissez une application Ã  supprimer :"
 $titleLabel.AutoSize = $true
 $titleLabel.Location = New-Object System.Drawing.Point(20, 20)
 $form.Controls.Add($titleLabel)
@@ -184,7 +184,7 @@ $quitButton.Size = New-Object System.Drawing.Size(100, 30)
 $quitButton.Add_Click({ $form.Close() })
 $form.Controls.Add($quitButton)
 
-# Afficher la fenêtre
+# Afficher la fenÃªtre
 $form.ShowDialog()
 
     },
@@ -226,5 +226,5 @@ for ($i = 0; $i -lt $options.Length; $i++) {
     $buttons += $button
 }
 
-# Afficher la fenêtre
+# Afficher la fenÃªtre
 $form.ShowDialog()
