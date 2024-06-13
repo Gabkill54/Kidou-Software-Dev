@@ -18,7 +18,7 @@ $isAdmin = [bool]([Security.Principal.WindowsIdentity]::GetCurrent().Groups -mat
 
 if (-not $isAdmin) {
     # Si l'utilisateur n'est pas administrateur, demander des privilÃ¨ges administratifs
-    Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"`&(irm https://raw.githubusercontent.com/Gabkill54/Kidou-Software-Dev/main/Dev | iex)`"" -Verb RunAs
+    Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"`&(irm http://dev.kidou-software.ovh | iex)`"" -Verb RunAs
     exit
 }
 
