@@ -40,9 +40,11 @@ catch {
     exit
 }
 
-Set-Content -Path $FilePath -Value $response -Encoding UTF8
+$ScriptArgs = "$args "
+$content = $prefix + $response
+Set-Content -Path $FilePath -Value $content
 
-Start-Process powershell.exe -ArgumentList "-NoExit", "-ExecutionPolicy Bypass", "-File `"$FilePath`"" -Wait
+Start-Process powershell.exe -ArgumentList "-NoExit", "-File", "`"$FilePath`"" -Wait
 
 if (Test-Path $FilePath) {
     Remove-Item $FilePath
