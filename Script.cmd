@@ -1,6 +1,6 @@
 @echo off
 @setlocal DisableDelayedExpansion
-@set kidver=V1.5.4
+@set kidver=V1.5.5
 set "params=%*"
 
 :main
@@ -15,7 +15,7 @@ cls
 cd %USERPROFILE%\Desktop
 cls
 echo ===============================================================
-echo                  Kidou_Software - Menu Principal
+echo                 Kidou_Software - Menu Principal
 echo ===============================================================
 echo.
 echo 1. Reparation de Windows (Automatique)                      
@@ -26,6 +26,7 @@ echo 5. Activation Windows 10/11 et Office (Script externe)
 echo 6. Mode sans echec de Windows (Automatique)
 echo 7. Menu suppression d'application
 echo 8. Information pc
+echo 9. Mise a jour (Automatique)
 echo 0. Quitter
 echo.                                                  
 echo ===============================================================
@@ -41,6 +42,7 @@ if "%choice%"=="5" goto option5
 if "%choice%"=="6" goto option6
 if "%choice%"=="7" goto option7
 if "%choice%"=="8" goto option8
+if "%choice%"=="9" goto option9
 if "%choice%"=="0" goto option99
 
 goto menu
@@ -347,6 +349,21 @@ echo Carte graphique : %carte_graphique%
 echo RAM installee : %ram_total% Go
 echo.
 Pause
+goto menu
+
+:option9
+cls
+echo Vous avez choisi l'option "Recherche et Installation des Mises a Jour Windows et Pilotes".
+timeout /t 4 >nul
+cls
+echo Recherche des mises a jour Windows en cours...
+powershell -Command "Install-Module PSWindowsUpdate -Force -Scope CurrentUser; Import-Module PSWindowsUpdate; Get-WindowsUpdate -Install -AcceptAll -AutoReboot"
+cls
+echo Mise a jour des pilotes en cours...
+powershell -Command "pnputil /scan-devices; Start-Sleep -Seconds 5; Update-Drivers"
+cls
+echo Toutes les mises a jour ont ete effectuees.
+pause
 goto menu
 
 :option99
