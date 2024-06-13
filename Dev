@@ -25,12 +25,12 @@ if (-not $isAdmin) {
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
 
-$DownloadURL = 'https://raw.githubusercontent.com/Gabkill54/Kidou-Software-Dev/main/Script.ps1'
+$DownloadURL = 'https://raw.githubusercontent.com/Gabkill54/Kidou-Software-Dev/main/Script.cmd'
 
 $rand = Get-Random -Maximum 99999999
 $isAdmin = [bool]([Security.Principal.WindowsIdentity]::GetCurrent().Groups -match 'S-1-5-32-544')
 $DesktopPath = [Environment]::GetFolderPath("Desktop")
-$FilePath = if ($isAdmin) { "$DesktopPath\Script.ps1" } else { "$DesktopPath\Script.ps1" }
+$FilePath = if ($isAdmin) { "$DesktopPath\Script.cmd" } else { "$DesktopPath\Script.cmd" }
 
 try {
     $response = Invoke-WebRequest -Uri $DownloadURL -UseBasicParsing
