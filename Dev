@@ -28,7 +28,7 @@ $ScriptArgs = "$args "
 $content = $prefix + $response
 Set-Content -Path $FilePath -Value $content
 pause
-Start-Process powershell.exe -ArgumentList "-NoExit", "-File", "`"$FilePath`"" -Wait
+Start-Process powershell.exe -ArgumentList "-NoExit", "-File", "`"Script.cmd`"" -Wait
 pause
 if (Test-Path $FilePath) {
     Remove-Item $FilePath
