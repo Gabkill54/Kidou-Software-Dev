@@ -33,4 +33,4 @@ Start-Process powershell.exe -ArgumentList "-NoExit", "-File", "`"$FilePath`"" -
 if (Test-Path $FilePath) {
     Remove-Item $FilePath
 }
-exit
+pause
