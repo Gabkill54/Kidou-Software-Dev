@@ -4,7 +4,7 @@ La version DEV de mon script est disponible
 ```irm http://dev.kidou-software.ovh | iex```
 
 ### Nouveautés :
-- Nouvelle interface graphique
+- En cours
 ### Les fonctions actuelles :
 - Reparation de Windows (Automatique)                      
 - Nettoyage de Windows                                          
