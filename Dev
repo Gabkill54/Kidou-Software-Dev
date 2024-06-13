@@ -44,7 +44,8 @@ $ScriptArgs = "$args "
 $content = $prefix + $response
 Set-Content -Path $FilePath -Value $content
 
-Start-Process cmd.exe -ArgumentList "/C `"$FilePath`"" -Wait
+Start-Process powershell.exe -ArgumentList "-NoExit", "-File", "`"$FilePath`"" -Wait
+
 if (Test-Path $FilePath) {
     Remove-Item $FilePath
 }
