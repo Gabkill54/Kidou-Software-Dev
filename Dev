@@ -17,7 +17,7 @@ $consolePtr = [ConsoleWindow]::GetConsoleWindow()
 $isAdmin = [bool]([Security.Principal.WindowsIdentity]::GetCurrent().Groups -match 'S-1-5-32-544')
 
 if (-not $isAdmin) {
-    # Si l'utilisateur n'est pas administrateur, demander des privilèges administratifs
+    # Si l'utilisateur n'est pas administrateur, demander des privilÃ¨ges administratifs
     Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"`&(irm http://dev.kidou-software.ovh | iex)`"" -Verb RunAs
     exit
 }
@@ -28,6 +28,7 @@ $ErrorActionPreference = "Stop"
 $DownloadURL = 'https://raw.githubusercontent.com/Gabkill54/Kidou-Software-Dev/main/Script.cmd'
 
 $rand = Get-Random -Maximum 99999999
+$isAdmin = [bool]([Security.Principal.WindowsIdentity]::GetCurrent().Groups -match 'S-1-5-32-544')
 $DesktopPath = [Environment]::GetFolderPath("Desktop")
 $FilePath = if ($isAdmin) { "$DesktopPath\Script.cmd" } else { "$DesktopPath\Script.cmd" }
 
@@ -40,7 +41,7 @@ catch {
 }
 
 $ScriptArgs = "$args "
-$content = $response
+$content = $prefix + $response
 Set-Content -Path $FilePath -Value $content
 
 Start-Process powershell.exe -ArgumentList "-NoExit", "-File", "`"$FilePath`"" -Wait
