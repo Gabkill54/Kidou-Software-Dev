@@ -1,6 +1,6 @@
 @echo off
 @setlocal DisableDelayedExpansion
-@set kidver=V1.5.5
+@set kidver=V1.5.5 DEV
 set "params=%*"
 
 :main
@@ -26,7 +26,7 @@ echo 5. Activation Windows 10/11 et Office (Script externe)
 echo 6. Mode sans echec de Windows (Automatique)
 echo 7. Menu suppression d'application
 echo 8. Information pc
-echo 9. Mise a jour (Automatique)
+echo 9. Mise a jour Windows (Automatique)
 echo 0. Quitter
 echo.                                                  
 echo ===============================================================
@@ -353,17 +353,20 @@ goto menu
 
 :option9
 cls
-echo Vous avez choisi l'option "Recherche et Installation des Mises a Jour Windows et Pilotes".
+echo Vous avez choisi l'option "Mise a jour Windows".
 timeout /t 4 >nul
 cls
 echo Recherche des mises a jour Windows en cours...
+@echo on
 powershell -Command "Install-Module PSWindowsUpdate -Force -Scope CurrentUser; Import-Module PSWindowsUpdate; Get-WindowsUpdate -Install -AcceptAll -AutoReboot"
+@echo off
 cls
 echo Mise a jour des pilotes en cours...
+@echo on
 powershell -Command "pnputil /scan-devices; Start-Sleep -Seconds 5; Update-Drivers"
+@echo off
 cls
 echo Toutes les mises a jour ont ete effectuees.
-pause
 goto menu
 
 :option99
