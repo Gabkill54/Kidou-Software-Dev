@@ -357,16 +357,11 @@ echo Vous avez choisi l'option "Mise a jour Windows".
 timeout /t 4 >nul
 cls
 echo Recherche des mises a jour Windows en cours...
-@echo on
-powershell -Command "Install-Module PSWindowsUpdate -Force -Scope CurrentUser; Import-Module PSWindowsUpdate; Get-WindowsUpdate -Install -AcceptAll -AutoReboot"
-@echo off
+start powershell -NoExit -Command "Install-Module PSWindowsUpdate -Force -Scope CurrentUser; Import-Module PSWindowsUpdate; Get-WindowsUpdate -Install -AcceptAll"
 cls
 echo Mise a jour des pilotes en cours...
-@echo on
-powershell -Command "pnputil /scan-devices; Start-Sleep -Seconds 5; Update-Drivers"
-@echo off
+start powershell -NoExit -Command "pnputil /scan-devices; Start-Sleep -Seconds 5; Update-Drivers"
 cls
-echo Toutes les mises a jour ont ete effectuees.
 goto menu
 
 :option99
