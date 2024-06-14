@@ -360,7 +360,7 @@ echo Recherche des mises a jour Windows en cours...
 powershell -Command "Install-Module PSWindowsUpdate -Force -Scope CurrentUser; Import-Module PSWindowsUpdate; Get-WindowsUpdate -Install -AcceptAll"
 cls
 echo Mise a jour des pilotes en cours...
-powershell -Command "pnputil /scan-devices; Start-Sleep -Seconds 5; Update-Drivers"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "pnputil /scan-devices; Start-Sleep -Seconds 5; pnputil /enum-devices /drivers; Start-Sleep -Seconds 5; pnputil /add-driver * /install"
 cls
 goto menu
 
