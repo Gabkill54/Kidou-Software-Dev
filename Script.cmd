@@ -356,9 +356,10 @@ cls
 echo Vous avez choisi l'option "Mise a jour Windows".
 timeout /t 4 >nul
 cls
+echo.
 echo Recherche des mises a jour Windows en cours...
 powershell -NoProfile -ExecutionPolicy Bypass -Command "Install-Module PSWindowsUpdate -Force -Scope CurrentUser; Import-Module PSWindowsUpdate; Get-WindowsUpdate -Install -AcceptAll"
-cls
+echo.
 echo Mise a jour des pilotes en cours...
 powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-WindowsUpdate -MicrosoftUpdate -Install -AcceptAll"
 cls
