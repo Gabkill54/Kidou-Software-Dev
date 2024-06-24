@@ -10,7 +10,7 @@ cls
 echo.
 echo Sauvegarde rapide du systeme
 echo.
-powershell Checkpoint-Computer -Description "Utilisation-du-script-de-Kidou" -RestorePointType MODIFY_SETTINGS
+powershell Checkpoint-Computer -Description "Utilisation-du-script-Dev-de-Kidou" -RestorePointType MODIFY_SETTINGS
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v SystemRestorePointCreationFrequency /t REG_DWORD /d 1440 /f
 cls
 
