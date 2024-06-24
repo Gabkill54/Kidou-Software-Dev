@@ -7,6 +7,9 @@ set "params=%*"
 title Kidou_Software %kidver%
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v SystemRestorePointCreationFrequency /t REG_DWORD /d 0 /f
 cls
+echo.
+echo Sauvegarde rapide du systeme
+echo.
 powershell Checkpoint-Computer -Description "Utilisation-du-script-de-Kidou" -RestorePointType MODIFY_SETTINGS
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v SystemRestorePointCreationFrequency /t REG_DWORD /d 1440 /f
 cls
@@ -43,7 +46,7 @@ if "%choice%"=="6" goto option6
 if "%choice%"=="7" goto option7
 if "%choice%"=="8" goto option8
 if "%choice%"=="9" goto option9
-if "%choice%"=="0" goto option99
+if "%choice%"=="0" goto option0
 
 goto menu
 
@@ -365,7 +368,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-WindowsUpdate -Micro
 cls
 goto menu
 
-:option99
+:option0
 exit
 
 :reboot
