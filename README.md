@@ -4,4 +4,4 @@ Il faut mettre la commande ci-dessous dans PowerShell
 
 ### La version Dev est une version moins stable que la version normal. Merci d'en tenir compte.
 
-### Version : 1.5.4 DEV
+### Version : 1.5.5 DEV
