@@ -27,7 +27,6 @@ for /f "skip=2 tokens=2,*" %%a in ('reg query "%regkey%" /v "%regvalue%" 2^>nul'
 set "text=%~1"
 set "color=%~2"
 echo ^[[%color%m%text%^[[0m
-goto :eof
 
 if "%telemetry_value%"=="0x0" (
     call :color_echo "Télémétrie est désactivée" "31"  :: Rouge
