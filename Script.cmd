@@ -294,6 +294,8 @@ sc config "edgeupdatem" start=disabled
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft" /v "DoNotUpdateToEdgeWithChromium" /t REG_DWORD /d 1 /f
 timeout /t 5 >nul
 rmdir /s /q "C:\Program Files (x86)\Microsoft\Edge"
+reg delete "HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\edgeupdate" /f
+reg delete "HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\edgeupdatem" /f
 
 goto menu
 
