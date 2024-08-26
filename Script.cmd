@@ -21,10 +21,9 @@ setlocal
 set "regKey=HKEY_LOCAL_MACHINE\SOFTWARE\Kidou"
 set "regValue=Telemetry"
 
-reg query "%regKey%" /v "%regValue%" >nul 2>&1
-if %errorlevel% neq 0 (
-    set "status=[31mDesactiver[0m"
-    goto menu
+if "%telemetry_value%" == "" (
+    reg add "HKLM\SOFTWARE\Kidou" /v Telemetry /t REG_DWORD /d 0 /f
+    set telemetry_value=0
 )
 
 for /f "tokens=3" %%A in ('reg query "%regKey%" /v "%regValue%" 2^>nul') do set "regData=%%A"
@@ -399,12 +398,7 @@ goto menu
 :option10
 for /f "tokens=3" %%A in ('reg query "HKLM\SOFTWARE\Kidou" /v Telemetry 2^>nul') do set telemetry_value=%%A
 
-if "%telemetry_value%" == "" (
-    reg add "HKLM\SOFTWARE\Kidou" /v Telemetry /t REG_DWORD /d 0 /f
-    set telemetry_value=0
-)
-
-if "%telemetry_value%" == "0" (
+if "%status%" == "[31mDesactiver[0m" (
     echo La télémétrie est désactivée. Exécution des opérations pour désactiver la télémétrie et bloquer les domaines...
     
     sc stop DiagTrack
