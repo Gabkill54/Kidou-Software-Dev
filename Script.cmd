@@ -23,9 +23,8 @@ set "regValue=Telemetry"
 
 reg query "%regKey%" /v "%regValue%" >nul 2>&1
 if %errorlevel% neq 0 (
-    REM Clé DWORD "Telemetry" n'existe pas
-    echo [31mDesactiver[0m
-    goto end
+    set "status=[31mDesactiver[0m"
+    goto menu
 )
 
 for /f "tokens=3" %%A in ('reg query "%regKey%" /v "%regValue%" 2^>nul') do set "regData=%%A"
