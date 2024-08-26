@@ -15,26 +15,29 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v Sys
 cls
 set "hostspath=%windir%\System32\drivers\etc\hosts"
 set "tempfile=%temp%\hosts_tmp"
-set "regkey=HKLM\SOFTWARE\Kidou"
-set "regvalue=Telemetry"
 
-for /f "skip=2 tokens=2,*" %%a in ('reg query "%regkey%" /v "%regvalue%" 2^>nul') do (
-    set "telemetry_value=%%b"
+setlocal
+
+set "regKey=HKEY_LOCAL_MACHINE\SOFTWARE\Kidou"
+set "regValue=Telemetry"
+
+reg query "%regKey%" /v "%regValue%" >nul 2>&1
+if %errorlevel% neq 0 (
+    REM Clé DWORD "Telemetry" n'existe pas
+    echo [31mDesactiver[0m
+    goto end
 )
 
-:: Fonction pour afficher en couleur
-:color_echo
-set "text=%~1"
-set "color=%~2"
-echo ^[[%color%m%text%^[[0m
+for /f "tokens=3" %%A in ('reg query "%regKey%" /v "%regValue%" 2^>nul') do set "regData=%%A"
 
-if "%telemetry_value%"=="0x0" (
-    call :color_echo "Télémétrie est désactivée" "31"  :: Rouge
-    set "status=desactive"
+if "%regData%"=="0x0" (
+    REM Valeur est 0
+    set "status=[31mDesactiver[0m"
 ) else (
-    call :color_echo "Télémétrie est activée" "32"  :: Vert
-    set "status=active"
+    REM Valeur est différente de 0
+    set "status=[32mActiver[0m"
 )
+
 
 :menu
 cd %USERPROFILE%\Desktop
@@ -52,7 +55,7 @@ echo 6.  Mode sans echec de Windows (Automatique)
 echo 7.  Menu suppression d'application
 echo 8.  Information pc
 echo 9.  Mise a jour Windows (Automatique)
-echo 10. Blockage télémétrie Windows %status%
+echo 10. Blockage telemetrie %status%
 echo 0. Quitter
 echo.                                                  
 echo ===============================================================
@@ -398,7 +401,7 @@ goto menu
 for /f "tokens=3" %%A in ('reg query "HKLM\SOFTWARE\Kidou" /v Telemetry 2^>nul') do set telemetry_value=%%A
 
 if "%telemetry_value%" == "" (
-    reg add "HKLM\SOFTWARE\Kidou" /v Telemetry /t REG_SZ /d 0 /f
+    reg add "HKLM\SOFTWARE\Kidou" /v Telemetry /t REG_DWORD /d 0 /f
     set telemetry_value=0
 )
 
@@ -575,7 +578,7 @@ if "%telemetry_value%" == "0" (
     echo 127.0.0.1 weus2watcab02.blob.core.windows.net
     ) >> %hostspath%
 
-    reg add "HKLM\SOFTWARE\Kidou" /v Telemetry /t REG_SZ /d 1 /f
+    reg add "HKLM\SOFTWARE\Kidou" /v Telemetry /t REG_DWORD /d 1 /f
     echo La télémétrie a été désactivée et les domaines ont été bloqués.
 ) else (
     echo La télémétrie est activée. Réactivation des services de télémétrie et suppression des domaines bloqués...
@@ -763,7 +766,7 @@ if "%telemetry_value%" == "0" (
     
     move /y %tempfile% %hostspath%
 
-    reg add "HKLM\SOFTWARE\Kidou" /v Telemetry /t REG_SZ /d 0 /f
+    reg add "HKLM\SOFTWARE\Kidou" /v Telemetry /t REG_DWORD /d 0 /f
     echo La télémétrie a été réactivée et les domaines ont été supprimés du fichier hosts.
 )
 cls
