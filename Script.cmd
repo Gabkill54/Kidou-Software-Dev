@@ -43,8 +43,7 @@ echo 5.  Activation Windows 10/11 et Office (Script externe)
 echo 6.  Mode sans echec de Windows (Automatique)
 echo 7.  Menu suppression d'application
 echo 8.  Information pc
-echo 9.  Mise a jour Windows (Automatique)
-echo 10. Blockage telemetrie %status% (Automatique)
+echo 9.  Blockage telemetrie %status% (Automatique)
 echo 0. Quitter
 echo.                                                  
 echo ===============================================================
@@ -61,7 +60,6 @@ if "%choice%"=="6" goto option6
 if "%choice%"=="7" goto option7
 if "%choice%"=="8" goto option8
 if "%choice%"=="9" goto option9
-if "%choice%"=="10" goto option10
 if "%choice%"=="0" goto option0
 
 goto menu
@@ -373,20 +371,6 @@ Pause
 goto menu
 
 :option9
-cls
-echo Vous avez choisi l'option "Mise a jour Windows".
-timeout /t 4 >nul
-cls
-echo.
-echo Recherche des mises a jour Windows en cours...
-powershell -NoProfile -ExecutionPolicy Bypass -Command "Install-Module PSWindowsUpdate -Force -Scope CurrentUser; Import-Module PSWindowsUpdate; Get-WindowsUpdate -Install -AcceptAll"
-echo.
-echo Mise a jour des pilotes en cours...
-powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-WindowsUpdate -MicrosoftUpdate -Install -AcceptAll"
-cls
-goto menu
-
-:option10
 if not exist "%folder%\%file%" (
     sc stop DiagTrack
     sc config DiagTrack start= disabled
