@@ -1,5 +1,4 @@
-
-
+@echo off
 @setlocal DisableDelayedExpansion
 @set kidver=V1.5.5 DEV
 set "params=%*"
