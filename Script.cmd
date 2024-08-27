@@ -19,16 +19,10 @@ set "tempfile=%temp%\hosts_tmp"
 
 setlocal
 
-set "regKey=HKEY_LOCAL_MACHINE\SOFTWARE\Kidou"
-set "regValue=Telemetry"
+set "folder=C:\Kidou"
+set "file=Telemetry"
 
-reg query "%regKey%" /v "%regValue%" >nul 2>&1
-if %errorlevel% neq 0 (
-    set "status=[31mDesactiver[0m"
-    goto menu
-)
-
-if "%regData%"=="0x0" (
+if not exist "%folder%\%file%" (
     set "status=[31mDesactiver[0m"
 ) else (
     set "status=[32mActiver[0m"
@@ -394,16 +388,7 @@ cls
 goto menu
 
 :option10
-for /f "tokens=3" %%A in ('reg query "HKLM\SOFTWARE\Kidou" /v Telemetry 2^>nul') do set telemetry_value=%%A
-
-if "%telemetry_value%" == "" (
-    reg add "HKLM\SOFTWARE\Kidou" /v Telemetry /t REG_DWORD /d 0 /f
-    set telemetry_value=0
-)
-
-if "%telemetry_value%" == "0" (
-    echo La télémétrie est désactivée. Exécution des opérations pour désactiver la télémétrie et bloquer les domaines...
-    
+if not exist "%folder%\%file%" (
     sc stop DiagTrack
     sc config DiagTrack start= disabled
     sc stop dmwappushservice
@@ -574,11 +559,8 @@ if "%telemetry_value%" == "0" (
     echo 127.0.0.1 weus2watcab02.blob.core.windows.net
     ) >> %hostspath%
 
-    reg add "HKLM\SOFTWARE\Kidou" /v Telemetry /t REG_DWORD /d 1 /f
-    echo La télémétrie a été désactivée et les domaines ont été bloqués.
+    mkdir "%folder%\%file%"
 ) else (
-    echo La télémétrie est activée. Réactivation des services de télémétrie et suppression des domaines bloqués...
-
     sc config DiagTrack start= auto
     sc start DiagTrack
     sc config dmwappushservice start= auto
@@ -762,8 +744,7 @@ if "%telemetry_value%" == "0" (
     
     move /y %tempfile% %hostspath%
 
-    reg add "HKLM\SOFTWARE\Kidou" /v Telemetry /t REG_DWORD /d 0 /f
-    echo La télémétrie a été réactivée et les domaines ont été supprimés du fichier hosts.
+    del "%folder%"
 )
 cls
 goto menu
