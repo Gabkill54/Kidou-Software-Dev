@@ -35,16 +35,16 @@ echo ===============================================================
 echo                 Kidou_Software - Menu Principal
 echo ===============================================================
 echo.
-echo 1.  Reparation de Windows (Automatique)                      
+echo 1.  Reparation de Windows (Automatique)
 echo 2.  Nettoyage de Windows
-echo 3.  Acces au bios (Automatique)                                   
-echo 4.  Scan antivirus avance (Automatique, Windows Defender requis)         
-echo 5.  Activation Windows 10/11 et Office (Script externe)           
+echo 3.  Acces au bios (Automatique)
+echo 4.  Scan antivirus avance (Automatique, Windows Defender requis)
+echo 5.  Activation Windows 10/11 et Office (Script externe)
 echo 6.  Mode sans echec de Windows (Automatique)
 echo 7.  Menu suppression d'application
 echo 8.  Information pc
 echo 9.  Mise a jour Windows (Automatique)
-echo 10. Blockage telemetrie %status%
+echo 10. Blockage telemetrie %status% (Automatique)
 echo 0. Quitter
 echo.                                                  
 echo ===============================================================
